@@ -1,5 +1,5 @@
 <template>
-  <div class="repos">
+  <div class="repos" @click="$router.push(`/repos/${this.repository.id}`)">
     <a class="link" :href="repository.html_url" target="_blank"><h2 class="title">{{this.repository.name}}</h2></a>
     <div class="author">
       <div class="avatar"><img :src="repository.owner.avatar_url" alt="avatar" /></div>
