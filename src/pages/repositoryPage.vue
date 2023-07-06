@@ -3,21 +3,21 @@
   <div class="wrapper">
     <div class="card">
       <div class="card-img">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRphpUWhRjfDGoiXlCdVUd801lk22QeBL3BPg&usqp=CAU" alt="avatar">
+        <img :src="this.repo.owner.avatar_url" alt="avatar">
       </div>
       <div class="desc">
-        <h6 class="primary-text">List of Free Learning Resources In Many Languages</h6>
-        <h6 class="secondary-text">This page is available as an easy-to-read website</h6>
+        <h6 class="primary-text">{{ this.repo.name }}</h6>
+        <h6 class="secondary-text">{{ this.repo.description }}</h6>
       </div>
       <button class="primary-text">Programming Playgrounds</button>
       <div class="details">
         <div class="rating">
-          <h6 class="primary-text"> 86% </h6>
-          <h6 class="secondary-text"> Rating </h6>
+          <h6 class="primary-text">{{this.repo.stargazers_count}}</h6>
+          <h6 class="secondary-text"> Stargazers </h6>
         </div>
         <div class="activity">
-          <h6 class="primary-text"> 92% </h6>
-          <h6 class="secondary-text"> Activity </h6>
+          <h6 class="primary-text">{{this.repo.watchers_count}}</h6>
+          <h6 class="secondary-text"> Watchers </h6>
         </div>
       </div>
     </div>
@@ -25,13 +25,13 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapState} from "vuex";
 
 export default {
   name: "repositoryPage",
   computed: {
-    ...mapGetters({
-      getRepoById: "repositories/getRepoById",
+    ...mapState({
+      repo: state => state.repositories.currentRepositoryById,
     }),
   }
 }

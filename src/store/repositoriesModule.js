@@ -4,6 +4,7 @@ export const repositoriesModule = {
     state: () => ({
         loading: false,
         repositories: [],
+        currentRepositoryById: null,
         searchQuery: '',
         currentPage: 1,
         limit: 10,
@@ -51,6 +52,9 @@ export const repositoriesModule = {
         },
         setRepositories(state, payload) {
             state.repositories = payload;
+        },
+        setRepository(state, payload) {
+            state.currentRepositoryById = payload;
         },
         setLoading(state, payload) {
             state.loading = payload;

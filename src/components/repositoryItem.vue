@@ -1,5 +1,5 @@
 <template>
-  <div class="repos" @click="$router.push(`/repos/${this.repository.id}`)">
+  <div class="repos" @click="onLinkToRepository">
     <a class="link" @click.stop :href="repository.html_url" target="_blank"><h2 class="title">{{this.repository.name}}</h2></a>
     <div class="author">
       <div class="avatar"><img :src="repository.owner.avatar_url" alt="avatar" /></div>
@@ -31,7 +31,7 @@
 <script>
 import MyButton from "@/components/ui/myButton.vue";
 import router from "@/router/router";
-import {mapGetters} from "vuex";
+import {mapGetters, mapMutations, mapState} from "vuex";
 
 export default {
   name: "repositoryItem",
@@ -45,11 +45,17 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+
+    }),
     ...mapGetters({
 
     }),
   },
   methods: {
+    ...mapMutations({
+      setRepository: 'repositories/setRepository',
+    }),
     router() {
       return router
     },
@@ -57,8 +63,8 @@ export default {
       this.$emit('remove', this.post.id);
     },
     onLinkToRepository() {
-
-      $router.push(`/repos/${this.repository.id}`)
+      this.setRepository(this.repository);
+      router.push(`/repos/${this.repository.id}`)
     }
   }
 }
