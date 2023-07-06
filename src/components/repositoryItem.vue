@@ -18,7 +18,7 @@
         <span class="watches-count">{{this.repository.watchers_count}}</span>
       </div>
     </div>
-    <div class="comment">
+    <div class="comment" @click.stop>
         <my-input
             class="input"
             placeholder="Комментарий к проекту"
