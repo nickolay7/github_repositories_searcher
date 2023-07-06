@@ -56,6 +56,9 @@ export const repositoriesModule = {
         setRepository(state, payload) {
             state.currentRepositoryById = payload;
         },
+        deleteCard(state, id) {
+            state.repositories = state.repositories.filter((repo) => repo.id !== id);
+        },
         setLoading(state, payload) {
             state.loading = payload;
         },

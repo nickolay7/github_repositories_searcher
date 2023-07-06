@@ -1,6 +1,9 @@
 <template>
   <div class="repos" @click="onLinkToRepository">
-    <a class="link" @click.stop :href="repository.html_url" target="_blank"><h2 class="title">{{this.repository.name}}</h2></a>
+    <div class="title">
+      <a class="link title-text" @click.stop :href="repository.html_url" target="_blank">{{this.repository.name}}</a>
+      <my-button class="deleteBtn" @click.stop @click="() => deleteCard(this.repository.id)">Удали меня</my-button>
+    </div>
     <div class="author">
       <div class="avatar"><img :src="repository.owner.avatar_url" alt="avatar" /></div>
       <a class="link" @click.stop :href="repository.owner.html_url" target="_blank"><p class="author-name">{{this.repository.full_name}}</p></a>
@@ -55,6 +58,7 @@ export default {
   methods: {
     ...mapMutations({
       setRepository: 'repositories/setRepository',
+      deleteCard: 'repositories/deleteCard',
     }),
     router() {
       return router
@@ -82,9 +86,15 @@ export default {
   width: 350px;
 }
 
+.deleteBtn {
+  color: white;
+  cursor: pointer;
+}
+
 .link {
   text-decoration: none;
   color: #1d1313;
+  display: inline-block;
 }
 
 .input {
@@ -98,21 +108,35 @@ export default {
   border: none !important;
 }
 
+.title {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .author, .achievements {
   display: flex;
   align-items: center;
   gap: 25px;
 }
 
-.author-name, .title {
-  width: 250px;
+.author-name, .title-text {
+  width: 200px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
   cursor: pointer;
+  display: flex;
+  text-decoration: none;
+  color: #1d1313;
 }
 
-.author-name:hover, .title:hover {
+.title-text {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.author-name:hover, .title-text:hover {
   color: #00A3FF;
 }
 
