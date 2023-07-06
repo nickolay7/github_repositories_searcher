@@ -5,22 +5,23 @@
         @change="onSetLimit"
         :options="options"
     />
-    <my-button @click="prevPage"><img src="../../assets/icons/arrowLeft.svg" alt="arrow_left" /></my-button>
+    <my-button @click="prevPagPart"><img src="../../assets/icons/arrowLeft.svg" alt="arrow_left" /></my-button>
     <my-button
         :key="page"
         class="page-number"
         :class="{
             'current-page': currentPage === page
           }"
-        v-for="page in total_pages"
+        v-for="page in paginationArrayPart"
         @click="() => choosePage(page)"
     >{{page}}</my-button>
-    <my-button @click="nextPage"><img src="../../assets/icons/arrowRight.svg" alt="arrow_right" /></my-button>
+    <my-button @click="nextPagPart"><img src="../../assets/icons/arrowRight.svg" alt="arrow_right" /></my-button>
+    <p class="curPagePointer">Текущая страница: {{this.currentPage}}</p>
   </div>
 </template>
 
 <script>
-import {mapActions, mapMutations, mapState} from "vuex";
+import {mapActions, mapGetters, mapMutations, mapState} from "vuex";
 
 export default {
   name: "pagination",
@@ -48,11 +49,14 @@ export default {
       limit: state => state.repositories.limit,
       total_pages: state => state.repositories.total_pages,
     }),
+    ...mapGetters({
+      paginationArrayPart: "repositories/paginationArrayPart",
+    }),
   },
   methods: {
     ...mapMutations({
-      nextPage: 'repositories/nextPage',
-      prevPage: 'repositories/prevPage',
+      nextPagPart: 'repositories/nextPagPart',
+      prevPagPart: 'repositories/prevPagPart',
       setPage: 'repositories/setPage',
       setLimit: 'repositories/setLimit',
     }),
@@ -94,5 +98,10 @@ export default {
 
 .current-page {
   background: #00A3FF;
+}
+
+.curPagePointer {
+  align-self: flex-end;
+  margin-left: 15px;
 }
 </style>

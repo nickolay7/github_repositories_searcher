@@ -8,21 +8,42 @@ export const repositoriesModule = {
         currentPage: 1,
         limit: 10,
         total_pages: 0,
+        currentPagPart: 1,
     }),
     getters: {
-        getRepoById(state, id) {
-            return state.repositories.find((r) => r.id === id);
+        getMinPart(state) {
+            const perPart = 3;
+
+            return perPart * state.currentPagPart - perPart;
+        },
+        getMaxPart(state) {
+            const perPart = 3;
+
+            return (perPart * state.currentPagPart) - 1;
+        },
+        pagesArray(state) {
+            const res = [];
+            for(let i = 1; i <= state.total_pages; i += 1) {
+                res.push(i);
+            }
+
+            return res;
+        },
+        paginationArrayPart(state, getters) {
+            return getters.pagesArray.filter(((part, idx) => idx >= getters.getMinPart && idx <= getters.getMaxPart));
         },
     },
     mutations: {
-        nextPage(state) {
-            if (state.currentPage !== state.total_pages) {
-                state.currentPage += 1;
+        nextPagPart(state) {
+            const totalParts = Math.ceil(state.total_pages / state.limit);
+
+            if (state.currentPagPart !== totalParts) {
+                state.currentPagPart += 1;
             }
         },
-        prevPage(state) {
-            if (state.currentPage !== 1) {
-                state.currentPage -= 1;
+        prevPagPart(state) {
+            if (state.currentPagPart !== 1) {
+                state.currentPagPart -= 1;
             }
         },
         setSearchQuery(state, payload) {
